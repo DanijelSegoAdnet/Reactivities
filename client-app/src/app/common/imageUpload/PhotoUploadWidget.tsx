@@ -3,7 +3,7 @@ import { Button, Grid, Header } from 'semantic-ui-react';
 import PhotoWidgetCropper from './PhotoWidgetCropper';
 import { PhotoWidgetDropzone } from './PhotoWidgetDropzone';
 
-interface Props {
+interface Props { 
     loading: boolean;
     uploadPhoto: (file: Blob) => void;
 }

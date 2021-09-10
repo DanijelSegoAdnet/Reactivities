@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosResponse} from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { history } from '../..';
 import { Activity, ActivityFormValues } from '../models/activity';
@@ -21,10 +21,10 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async response => {
-        await sleep(1000);
-        return response;
-},(error: AxiosError) => {
-    const {data, status, config} = error.response!;
+    await sleep(1000);
+    return response;
+}, (error: AxiosError) => {
+    const { data, status, config } = error.response!;
     switch (status) {
         case 400:
             if (typeof data === 'string') {
@@ -59,13 +59,13 @@ axios.interceptors.response.use(async response => {
     return Promise.reject(error);
 })
 
-const responseBody = <T> ( response: AxiosResponse<T> ) => response.data;
+const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 const requests = {
-get: <T> (url: string) => axios.get<T>(url).then(responseBody),
-post: <T> (url: string, body: {}) => axios.post<T>(url,body).then(responseBody),
-put: <T> (url: string, body: {}) => axios.put<T>(url,body).then(responseBody),
-del: <T> (url: string) => axios.delete<T>(url).then(responseBody),
+    get: <T>(url: string) => axios.get<T>(url).then(responseBody),
+    post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
+    put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
+    del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
 
 const Activities = {
@@ -89,12 +89,15 @@ const Profiles = {
         let formData = new FormData();
         formData.append('File', file);
         return axios.post<Photo>('photos', formData, {
-            headers: {'Content-type' : 'multipart/form-data'}
+            headers: { 'Content-type': 'multipart/form-data' }
         })
     },
     setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
-    deletePhoto: (id: string) => requests.del(`/photos/${id}`)
+    deletePhoto: (id: string) => requests.del(`/photos/${id}`),
+    updateProfile: (profile: Partial<Profile>) => requests.put(`/profiles`,
+        profile)
 }
+
 
 const agent = {
     Activities,
