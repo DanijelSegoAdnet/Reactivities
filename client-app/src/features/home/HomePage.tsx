@@ -26,11 +26,11 @@ export default observer(function HomePage() {
                     </>
                 ): (
                     <>
-                    <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted >
-                    Login!
+                    <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted style={{width: '135px'}} >
+                    Login
                    </Button>
                     <Button onClick={() => modalStore.openModal(<RegisterForm />)} size='huge' inverted >
-                    Register!
+                    Register
                    </Button>
                    <Divider horizontal inverted>Or</Divider>
                    <Button

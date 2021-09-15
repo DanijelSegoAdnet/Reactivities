@@ -25,12 +25,12 @@ export default observer(function ActivityForm() {
     const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
     
     const validationSchema = Yup.object({
-        title: Yup.string().required('The activity title is required'),
-        description: Yup.string().required('The activity description is required'),
-        category: Yup.string().required(),
-        date: Yup.string().required('Date is required').nullable(),
-        city: Yup.string().required(),
-        venue: Yup.string().required()
+        title: Yup.string().required('Title is required!'),
+        description: Yup.string().required('Description is required!'),
+        category: Yup.string().required('Category is required!'),
+        date: Yup.string().required('Date is required!').nullable(),
+        city: Yup.string().required('City is required!'),
+        venue: Yup.string().required('Venue is required!')
     })
 
     useEffect(() => {
@@ -38,6 +38,7 @@ export default observer(function ActivityForm() {
     }, [id, loadActivity]);
 
     function handleFormSubmit(activity: ActivityFormValues) {
+        console.log(activity, 'activity')
         if  (!activity.id) {
             let newActivity = {
                 ...activity,
