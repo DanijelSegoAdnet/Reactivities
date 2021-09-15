@@ -11,7 +11,7 @@ namespace API.Controllers
     public class ActivitiesController : BaseApiController
     {
         [HttpGet]  
-        public async Task<IActionResult> GetActivities([FromQuery]ActivityParams param)
+        public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
             return HandlePagedResult(await Mediator.Send(new List.Query{Params = param}));
         }
@@ -27,15 +27,15 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Create.Command {Activity = activity}));
         }
-         [Authorize(Policy="IsActivityHost")]
+         [Authorize(Policy = "IsActivityHost")]
          [HttpPut("{id}")]  
         public async Task<IActionResult> EditActivity(Guid id, Activity activity)
         {
             activity.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command {Activity = activity}));
+            return HandleResult(await Mediator.Send(new Edit.Command{Activity = activity}));
         }
 
-         [Authorize(Policy="IsActivityHost")]
+         [Authorize(Policy = "IsActivityHost")]
          [HttpDelete("{id}")]  
         public async Task<IActionResult> DeleteActivity(Guid id)
         {

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure.Security;
 using Infrastructure.Photos;
 using System;
+using Infrastructure.Email;
 
 namespace API.Extensions
 {
@@ -23,17 +24,17 @@ namespace API.Extensions
             });
             services.AddDbContext<DataContext>(options =>
             {
-                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-                string connStr;
+            string connStr;
 
-                // Depending on if in development or production, use either Heroku-provided
-                // connection string, or development connection string from env var.
-                if (env == "Development")
-                {
-                    // Use connection string from file.
-                    connStr = config.GetConnectionString("DefaultConnection");
-                }
+            // Depending on if in development or production, use either Heroku-provided
+            // connection string, or development connection string from env var.
+            if (env == "Development")
+            {
+                // Use connection string from file.
+                connStr = config.GetConnectionString("DefaultConnection");
+            }
                 else
                 {
                     // Use connection string provided at runtime by Heroku.
@@ -60,7 +61,7 @@ namespace API.Extensions
 
             services.AddCors(opt =>
             {
-                opt.AddPolicy("CorsPolicy",policy =>
+                opt.AddPolicy("CorsPolicy", policy =>
                 {
                     policy
                         .AllowAnyMethod()
@@ -74,6 +75,7 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.AddScoped<EmailSender>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
             services.AddSignalR();
 

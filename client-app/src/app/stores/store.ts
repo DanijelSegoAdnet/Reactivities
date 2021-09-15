@@ -7,7 +7,7 @@ import ProfileStore from "./profileStore";
 import UserStore from "./userStore";
 
 interface Store {
-    activityStore: ActivityStore; 
+    activityStore: ActivityStore;
     commonStore: CommonStore;
     userStore: UserStore;
     modalStore: ModalStore;

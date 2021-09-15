@@ -51,11 +51,8 @@ export default class UserStore {
 
     register = async (creds: UserFormValues) =>{
         try {
-            const user = await agent.Account.register(creds);
-            store.commonStore.setToken(user.token);
-            this.startRefreshTokenTimer(user);
-            runInAction(() => this.user = user); 
-            history.push('/activities');
+            await agent.Account.register(creds);
+            history.push(`/account/registerSuccess?email=${creds.email}`);
             store.modalStore.closeModal();
         } catch (error) {
             throw error;
@@ -105,7 +102,7 @@ export default class UserStore {
     }
 
     refreshToken = async () => {
-        this.stopRegreshTokenTimer();
+        this.stopRefreshTokenTimer();
         try {
             const user = await agent.Account.refreshToken();
             runInAction(() => this.user = user);
@@ -123,7 +120,7 @@ export default class UserStore {
         this.refreshTokenTimeout = setTimeout(this.refreshToken, timeout);
     }
 
-    private stopRegreshTokenTimer() {
+    private stopRefreshTokenTimer() {
         clearTimeout(this.refreshTokenTimeout);
     }
 }

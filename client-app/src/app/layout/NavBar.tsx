@@ -6,15 +6,17 @@ import { useStore } from '../stores/store';
 
 export default observer(function NavBar() {
 
-    const {userStore: {user, logout}} = useStore();
+    const {userStore: {user, logout, isLoggedIn}} = useStore();
 
     return (
         <Menu inverted fixed='top'>
             <Container>
-                <Menu.Item exact as={NavLink} to='/' header>
-                    <img src="/assets/logo.png" alt="logo" style={{marginRight: '10px'}} />
+                <Menu.Item as={NavLink} exact to='/' header>
+                    <img src='/assets/logo.png' alt='logo' style={{marginRight: '10px'}} />
                     Reactivites
                 </Menu.Item>
+                {isLoggedIn &&
+                <>
                 <Menu.Item as={NavLink} to='/activities' name='Activities' />
                 <Menu.Item>
                     <Button as={NavLink} to='/createActivity' positive content='Create Activity' />
@@ -27,7 +29,8 @@ export default observer(function NavBar() {
                              <Dropdown.Item onClick={logout} text='Logout' icon='power' />
                         </Dropdown.Menu>
                     </Dropdown>
-                </Menu.Item>
+                </Menu.Item> 
+                </>}
             </Container>
         </Menu>
     )

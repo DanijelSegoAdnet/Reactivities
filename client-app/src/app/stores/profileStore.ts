@@ -166,7 +166,6 @@ export default class ProfileStore {
                 this.loadingFollowings = false;
             })
         } catch (error) {
-            console.log(error);
             runInAction(() => this.loadingFollowings = false);
         }
     }
@@ -174,8 +173,7 @@ export default class ProfileStore {
     loadUserActivities = async (username: string, predicate?: string) => {
         this.loadingActivities = true;
         try {
-            const activities = await agent.Profiles.listActivities(username,
-                predicate!);
+            const activities = await agent.Profiles.listActivities(username, predicate!);
             runInAction(() => {
                 this.userActivities = activities;
                 this.loadingActivities = false;

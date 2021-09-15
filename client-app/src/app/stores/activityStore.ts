@@ -14,10 +14,10 @@ export default class ActivityStore {
     loadingInitial = false;
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
-    predicate= new Map().set('all', true);
+    predicate = new Map().set('all', true);
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
 
         reaction(
             () => this.predicate.keys(),
@@ -47,11 +47,11 @@ export default class ActivityStore {
                 this.predicate.set('all', true);
                 break;
             case 'isGoing':
-                resetPredicate()
+                resetPredicate();
                 this.predicate.set('isGoing', true);
                 break;
             case 'isHost':
-                resetPredicate()
+                resetPredicate();
                 this.predicate.set('isHost', true);
                 break;
             case 'startDate':
@@ -108,7 +108,7 @@ export default class ActivityStore {
     }
 
     loadActivity = async (id: string) => {
-        let activity =  this.getActivity(id);
+        let activity = this.getActivity(id);
         if (activity) {
             this.selectedActivity = activity;
             return activity;
@@ -138,7 +138,7 @@ export default class ActivityStore {
             activity.isHost = activity.hostUsername === user.username;
             activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
         }
-        activity.date = new Date(activity.date!)
+        activity.date = new Date(activity.date!);
         this.activityRegistry.set(activity.id, activity);
     }
 
@@ -237,10 +237,6 @@ export default class ActivityStore {
         }
     }
 
-    clearSelectedActivity = () => {
-        this.selectedActivity = undefined;
-    }
-
     updateAttendeeFollowing = (username: string) => {
         this.activityRegistry.forEach(activity => {
             activity.attendees.forEach(attendee => {
@@ -250,5 +246,9 @@ export default class ActivityStore {
                 }
             })
         })
+    }
+    
+    clearSelectedActivity = () => {
+        this.selectedActivity = undefined;
     }
 }
